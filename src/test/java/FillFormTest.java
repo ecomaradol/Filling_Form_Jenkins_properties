@@ -1,6 +1,10 @@
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
@@ -12,11 +16,19 @@ public class FillFormTest {
     @BeforeAll()
     static void beforeAll() {
         Configuration.baseUrl = "https://demoqa.com";
-       // Configuration.browserSize = "1920x1080";
+        Configuration.browserSize = "1920x1080";
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+        desiredCapabilities.setCapability("enableVNC", true);
+        desiredCapabilities.setCapability("enableVideo", true);
+        Configuration.browserCapabilities = desiredCapabilities;
+
+        Configuration.remote = "https://user1:1234@selenoide.autotests.cloud/wd/hub";
     }
 
     @Test
     void successFillForm() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+
         open("/automation-practice-form");
         $("h5").shouldHave(text("Student Registration Form"));
 
