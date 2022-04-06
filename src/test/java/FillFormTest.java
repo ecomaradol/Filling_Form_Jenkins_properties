@@ -1,11 +1,5 @@
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.logevents.SelenideLogger;
-import io.qameta.allure.selenide.AllureSelenide;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
+import org.junit.jupiter.api.Test;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
@@ -13,22 +7,8 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class FillFormTest {
 
-    @BeforeAll()
-    static void beforeAll() {
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = "1920x1080";
-        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-        desiredCapabilities.setCapability("enableVNC", true);
-        desiredCapabilities.setCapability("enableVideo", true);
-        Configuration.browserCapabilities = desiredCapabilities;
-
-        Configuration.remote = "https://user1:1234@selenoide.autotests.cloud/wd/hub";
-    }
-
     @Test
     void successFillForm() {
-        SelenideLogger.addListener("allure", new AllureSelenide());
-
         open("/automation-practice-form");
         $("h5").shouldHave(text("Student Registration Form"));
 
@@ -49,13 +29,10 @@ public class FillFormTest {
         $("#react-select-3-input").setValue("Uttar Pradesh").pressEnter();
         $("#react-select-4-input").setValue("Agra").pressEnter();
         $("#submit").scrollIntoView(true).click();
-       // $("#submit").click();
 
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
         $(".table-responsive").shouldHave(text("Mara Dol"), text("test@test.com"), text("Female"),
                 text("4564564545l"), text("30 August,1983"), text("Math, Arts"),
                 text("Sports"), text("test_file.txt"), text("Address"), text("Uttar Pradesh Agra"));
-
-
     }
 }
