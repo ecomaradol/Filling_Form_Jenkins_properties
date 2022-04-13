@@ -29,7 +29,7 @@ public class FillFormTest extends TestBase {
         $("#currentAddress").setValue("Address");
         $("#react-select-3-input").setValue("Uttar Pradesh").pressEnter();
         $("#react-select-4-input").setValue("Agra").pressEnter();
-        $("#submit").scrollIntoView(true).click();
+        $("#submit").click();
 
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
         $(".table-responsive").shouldHave(text("Mara Dol"), text("test@test.com"), text("Female"),
